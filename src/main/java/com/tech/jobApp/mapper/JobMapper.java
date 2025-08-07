@@ -1,0 +1,26 @@
+package com.tech.jobApp.mapper;
+
+import com.tech.jobApp.dto.response.CompanyDto;
+import com.tech.jobApp.dto.response.JobDto;
+import com.tech.jobApp.model.Job;
+
+public class JobMapper {
+
+	public static JobDto mapJobToDto(Job job) {
+        JobDto dto = new JobDto();
+        dto.setTitle(job.getTitle());
+        dto.setDescription(job.getDescription());
+        dto.setLocation(job.getLocation());
+        dto.setMinSalary(job.getMinSalary());
+        dto.setMaxSalary(job.getMaxSalary());
+        dto.setPostedAt(job.getPostedAt());
+
+        if (job.getCompany() != null) {
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.setName(job.getCompany().getName());
+            companyDto.setType(job.getCompany().getType());
+            dto.setCompany(companyDto);
+        }
+        return dto;
+    }
+}
