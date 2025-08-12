@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tech.jobApp.dto.request.JobUpdateDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.mapper.JobMapper;
+import com.tech.jobApp.model.Company;
 import com.tech.jobApp.model.Job;
+import com.tech.jobApp.repository.CompanyRepository;
 import com.tech.jobApp.repository.JobRepository;
 import com.tech.jobApp.service.JobService;
 
@@ -17,6 +20,9 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     private JobRepository jobRepository;
+    
+    @Autowired
+    private CompanyRepository companyRepository;
     
     
     // Create job
@@ -28,19 +34,35 @@ public class JobServiceImpl implements JobService {
     
     //Update job
     @Override
-    public Job updateJob(Long id, Job updatedJob) {
+    public JobDto updateJob(Long id, JobUpdateDto jobUpdateDto) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found with ID: " + id));
 
-        job.setTitle(updatedJob.getTitle());
-        job.setDescription(updatedJob.getDescription());
-        job.setLocation(updatedJob.getLocation());
-        job.setMinSalary(updatedJob.getMinSalary());
-        job.setMaxSalary(updatedJob.getMaxSalary());
-        job.setCompany(updatedJob.getCompany());
+        if (jobUpdateDto.getTitle() != null) {
+            job.setTitle(jobUpdateDto.getTitle());
+        }
+        if (jobUpdateDto.getDescription() != null) {
+            job.setDescription(jobUpdateDto.getDescription());
+        }
+        if (jobUpdateDto.getLocation() != null) {
+            job.setLocation(jobUpdateDto.getLocation());
+        }
+        if (jobUpdateDto.getMinSalary() != null) {
+            job.setMinSalary(jobUpdateDto.getMinSalary());
+        }
+        if (jobUpdateDto.getMaxSalary() != null) {
+            job.setMaxSalary(jobUpdateDto.getMaxSalary());
+        }
+        if (jobUpdateDto.getCompanyId() != null) {
+            Company company = companyRepository.findById(jobUpdateDto.getCompanyId())
+                    .orElseThrow(() -> new RuntimeException("Company not found with ID: " + jobUpdateDto.getCompanyId()));
+            job.setCompany(company);
+        }
 
-        return jobRepository.save(job);
+        Job updatedJob = jobRepository.save(job);
+        return JobMapper.mapJobToDto(updatedJob);
     }
+
 
     
     //Delete job

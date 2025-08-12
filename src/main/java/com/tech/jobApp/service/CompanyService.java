@@ -3,22 +3,32 @@ package com.tech.jobApp.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.tech.jobApp.dto.request.CompanyUpdateDto;
+import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.model.Company;
 
 //Interface for abstraction
 public interface CompanyService {
     
+	// Create or Post new Company
     Company createCompany(Company company);
     
-    Company updateCompany(Long id, Company updatedCompany);
+    // Update an existing Company
+    void updateCompany(Long id, CompanyUpdateDto updatedCompanyDto);
     
+    // Delete an Existing Company
     void deleteCompany(Long id);
     
-    List<Company> getAllCompanies();
+    // Get all companies
+    List<CompanyDto> getAllCompanies();
     
-    Optional<Company> searchCompanyByName(String name);
+    // Search Company By name
+     CompanyDto searchCompanyByName(String name);
     
-    List<Company> searchCompaniesByType(String type);
+    // Search Company By Type
+    List<CompanyDto> searchCompaniesByType(String type);
 
-	Optional<Company> getCompanyById(Long id);
+    
+    // Get Company by company id
+	CompanyDto getCompanyById(Long id);
 }

@@ -7,8 +7,8 @@ public class JobDto {
 	private String title;
     private String description;
     private String location;
-    private double minSalary;
-    private double maxSalary;
+    private Double minSalary;
+    private Double maxSalary;
     private LocalDate postedAt;
     private CompanyDto company;
 	public String getTitle() {
@@ -29,16 +29,16 @@ public class JobDto {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public double getMinSalary() {
+	public Double getMinSalary() {
 		return minSalary;
 	}
-	public void setMinSalary(double minSalary) {
+	public void setMinSalary(Double minSalary) {
 		this.minSalary = minSalary;
 	}
-	public double getMaxSalary() {
+	public Double getMaxSalary() {
 		return maxSalary;
 	}
-	public void setMaxSalary(double maxSalary) {
+	public void setMaxSalary(Double maxSalary) {
 		this.maxSalary = maxSalary;
 	}
 	public LocalDate getPostedAt() {

@@ -19,6 +19,7 @@ public class JobMapper {
             CompanyDto companyDto = new CompanyDto();
             companyDto.setName(job.getCompany().getName());
             companyDto.setType(job.getCompany().getType());
+            // No jobs set inside companyDto
             dto.setCompany(companyDto);
         }
         return dto;

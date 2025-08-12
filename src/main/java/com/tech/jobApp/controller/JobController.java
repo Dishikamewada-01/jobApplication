@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tech.jobApp.dto.request.JobUpdateDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.model.Job;
 import com.tech.jobApp.service.JobService;
@@ -50,9 +52,10 @@ public class JobController {
 
     // Update job (admin)
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
-    public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job job) {
-        return ResponseEntity.ok(jobService.updateJob(id, job));
+    @PatchMapping("/{id}")
+    public ResponseEntity<JobDto> updateJobPartially(@PathVariable Long id, @RequestBody JobUpdateDto requestedJob) {
+    	
+        return ResponseEntity.ok(jobService.updateJob(id, requestedJob));
     }
 
     // Delete job (admin)
