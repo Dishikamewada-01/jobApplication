@@ -1,7 +1,7 @@
 package com.tech.jobApp.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
 import com.tech.jobApp.dto.response.CompanyDto;
@@ -14,7 +14,7 @@ public interface CompanyService {
     Company createCompany(Company company);
     
     // Update an existing Company
-    void updateCompany(Long id, CompanyUpdateDto updatedCompanyDto);
+    CompanyDto updateCompany(Long id, CompanyUpdateDto updatedCompanyDto);
     
     // Delete an Existing Company
     void deleteCompany(Long id);

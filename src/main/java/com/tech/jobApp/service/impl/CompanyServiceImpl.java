@@ -31,13 +31,21 @@ public class CompanyServiceImpl implements CompanyService{
     
     // Update an Existing Company
     @Override
-    public void updateCompany(Long id, CompanyUpdateDto updatedCompanyDto) {
+    public CompanyDto updateCompany(Long id, CompanyUpdateDto updatedCompanyDto) {
         Company existing = companyRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Company not found"));
 
-        existing.setName(updatedCompanyDto.getName());
-        existing.setType(updatedCompanyDto.getType());
-        companyRepository.save(existing);
+     // Sirf non-null fields ko update karo
+        if (updatedCompanyDto.getName() != null) {
+            existing.setName(updatedCompanyDto.getName());
+        }
+        if (updatedCompanyDto.getType() != null) {
+            existing.setType(updatedCompanyDto.getType());
+        }
+        
+
+        Company updatedCompany = companyRepository.save(existing);
+        return CompanyMapper.mapCompanyToDto(updatedCompany);
  
     }
 
@@ -46,7 +54,7 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public void deleteCompany(Long id) {
     	Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Job not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Company not found with ID: " + id));
         companyRepository.delete(company);
     }
 

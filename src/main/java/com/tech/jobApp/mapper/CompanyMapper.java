@@ -6,6 +6,7 @@ package com.tech.jobApp.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.model.Company;

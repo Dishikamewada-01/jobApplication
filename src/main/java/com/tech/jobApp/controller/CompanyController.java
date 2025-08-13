@@ -41,9 +41,8 @@ public class CompanyController {
     //Update Company
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateCompany(@PathVariable Long id, @RequestBody CompanyUpdateDto updatedCompanyDto) {
-       companyService.updateCompany(id, updatedCompanyDto);
-       return ResponseEntity.ok("Company Updated Successfully");
+    public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, @RequestBody CompanyUpdateDto updatedCompanyDto) {
+       return ResponseEntity.ok(companyService.updateCompany(id, updatedCompanyDto));
     }
     
    

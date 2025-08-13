@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.tech.jobApp.model.Users;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Integer> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
 	 Optional<Users> findByUsername(String username);
   
