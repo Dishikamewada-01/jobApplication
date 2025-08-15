@@ -1,12 +1,16 @@
 package com.tech.jobApp.service.impl;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
 import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.mapper.CompanyMapper;
@@ -61,11 +65,15 @@ public class CompanyServiceImpl implements CompanyService{
     
     // Get All Companies
     @Override
-    public List<CompanyDto> getAllCompanies() {
-        List<Company> companies = companyRepository.findAll();
+    public List<CompanyDto> getAllCompanies(int page , int size) {
+    	
+    	Pageable pageable= PageRequest.of(page, size);
+    	
+        Page<Company> companiesPage = companyRepository.findAll(pageable);
+        
         List<CompanyDto> companyDtos = new ArrayList<>();
         
-        for(Company company : companies) {
+        for(Company company : companiesPage.getContent()) {
         	CompanyDto dto = CompanyMapper.mapCompanyToDto(company);
         	companyDtos.add(dto);
         }
@@ -88,10 +96,11 @@ public class CompanyServiceImpl implements CompanyService{
     
     // Search Company by Type
     @Override
-    public List<CompanyDto> searchCompaniesByType(String type) {
-        List<Company> companies= companyRepository.findByType(type);
+    public List<CompanyDto> searchCompaniesByType(String type , int page , int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+        Page<Company> companiesPage = companyRepository.findByType(type , pageable);
         List<CompanyDto> comDtos= new ArrayList<>();
-        for(Company company : companies) {
+        for(Company company : companiesPage.getContent()) {
         	comDtos.add(CompanyMapper.mapCompanyToDto(company));
         }
         

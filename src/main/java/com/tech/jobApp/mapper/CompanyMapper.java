@@ -8,6 +8,7 @@ import java.util.List;
 
 
 import com.tech.jobApp.dto.response.CompanyDto;
+import com.tech.jobApp.dto.response.JobBasicDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.model.Company;
 import com.tech.jobApp.model.Job;
@@ -20,10 +21,10 @@ public class CompanyMapper {
 	        comDto.setName(company.getName());
 	        comDto.setType(company.getType());
 	        
-	        List<JobDto> jobDtos = new ArrayList<>();
+	        List<JobBasicDto> jobDtos = new ArrayList<>();
 		    if (company.getJobs() != null) {
 		        for (Job job : company.getJobs()) {
-		            JobDto jobDto = new JobDto();
+		            JobBasicDto jobDto = new JobBasicDto();
 		            jobDto.setTitle(job.getTitle());
 		            jobDto.setDescription(job.getDescription());
 		            jobDto.setLocation(job.getLocation());

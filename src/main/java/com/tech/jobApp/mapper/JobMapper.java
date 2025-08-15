@@ -1,5 +1,6 @@
 package com.tech.jobApp.mapper;
 
+import com.tech.jobApp.dto.response.CompanyBasicDto;
 import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.model.Job;
@@ -16,7 +17,7 @@ public class JobMapper {
         dto.setPostedAt(job.getPostedAt());
 
         if (job.getCompany() != null) {
-            CompanyDto companyDto = new CompanyDto();
+            CompanyBasicDto companyDto = new CompanyBasicDto();
             companyDto.setName(job.getCompany().getName());
             companyDto.setType(job.getCompany().getType());
             // No jobs set inside companyDto

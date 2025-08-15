@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
@@ -59,8 +60,10 @@ public class CompanyController {
     
     // Get All Companies
     @GetMapping
-    public ResponseEntity<List<CompanyDto>> getAllCompanies() {
-    	List<CompanyDto> companies = companyService.getAllCompanies();
+    public ResponseEntity<List<CompanyDto>> getAllCompanies(
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+    	List<CompanyDto> companies = companyService.getAllCompanies(page , size);
         return ResponseEntity.ok(companies);
         
     }
@@ -75,8 +78,8 @@ public class CompanyController {
 
     
     // Search Company By name
-    @GetMapping("/name/{name}")
-    public ResponseEntity<CompanyDto> getCompanyByName(@PathVariable String name) {
+    @GetMapping("/search/name")
+    public ResponseEntity<CompanyDto> getCompanyByName(@RequestParam String name) {
     	CompanyDto company = companyService.searchCompanyByName(name);
         if (company != null) {
             return ResponseEntity.ok(company);
@@ -86,9 +89,10 @@ public class CompanyController {
 
     
     // Search Company by Type
-    @GetMapping("/type/{type}")
-    public ResponseEntity<List<CompanyDto>> getCompaniesByType(@PathVariable String type) {
-    	List<CompanyDto> companies = companyService.searchCompaniesByType(type);
+    @GetMapping("/search/type")
+    public ResponseEntity<List<CompanyDto>> getCompaniesByType(@RequestParam String type , @RequestParam(defaultValue = "0") int page
+                       , @RequestParam(defaultValue = "5") int size) {
+    	List<CompanyDto> companies = companyService.searchCompaniesByType(type , page , size);
         return ResponseEntity.ok(companies);
     }
 }

@@ -20,13 +20,13 @@ public interface CompanyService {
     void deleteCompany(Long id);
     
     // Get all companies
-    List<CompanyDto> getAllCompanies();
+    List<CompanyDto> getAllCompanies(int page , int size);
     
     // Search Company By name
      CompanyDto searchCompanyByName(String name);
     
     // Search Company By Type
-    List<CompanyDto> searchCompaniesByType(String type);
+    List<CompanyDto> searchCompaniesByType(String type , int page , int size);
 
     
     // Get Company by company id

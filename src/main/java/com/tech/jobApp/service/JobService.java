@@ -18,18 +18,18 @@ public interface JobService {
 	    void deleteJob(Long id);
 
 	    //Get all the Jobs
-	    List<JobDto> getAllJobs();
+	    List<JobDto> getAllJobs(int page , int size);
 
 	    // Get Job By id
 	    JobDto getJobById(Long id);
 
 	    // Search Job by uts title
-	    List<JobDto> searchJobsByTitle(String title);
+	    List<JobDto> searchJobsByTitle(String title , int page , int size);
 
 	    // Search Job by location
-	    List<JobDto> searchJobsByLocation(String location);
+	    List<JobDto> searchJobsByLocation(String location , int page , int size);
 
 	    // Search job by particular company name
-	    List<JobDto> searchJobsByCompanyName(String companyName);
+	    List<JobDto> searchJobsByCompanyName(String companyName , int page , int size);
 
 }

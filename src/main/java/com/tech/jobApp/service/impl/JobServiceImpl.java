@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tech.jobApp.dto.request.JobUpdateDto;
@@ -76,11 +79,14 @@ public class JobServiceImpl implements JobService {
     
  // Get All Job
     @Override
-    public List<JobDto> getAllJobs() {
-    	List<Job> jobs = jobRepository.findAll();
+    public List<JobDto> getAllJobs(int page , int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	
+    	Page<Job> jobsPage = jobRepository.findAll(pageable);
+    	
         List<JobDto> jobDtos = new ArrayList<>();
 
-        for (Job job : jobs) {
+        for (Job job : jobsPage.getContent()) {
             JobDto dto = JobMapper.mapJobToDto(job);
             jobDtos.add(dto);
         }
@@ -102,10 +108,12 @@ public class JobServiceImpl implements JobService {
     
     // Search Job By Title
     @Override
-    public List<JobDto> searchJobsByTitle(String title) {
-    	List<Job> jobs = jobRepository.findByTitleContainingIgnoreCase(title);
+    public List<JobDto> searchJobsByTitle(String title ,int page , int size) {
+    	
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<Job> jobsPage = jobRepository.findByTitleContainingIgnoreCase(title , pageable);
         List<JobDto> jobDtos = new ArrayList<>();
-        for (Job job : jobs) {
+        for (Job job : jobsPage.getContent()) {
             jobDtos.add(JobMapper.mapJobToDto(job));
         }
         return jobDtos;
@@ -114,10 +122,11 @@ public class JobServiceImpl implements JobService {
     
     //Search job by Location
     @Override
-    public List<JobDto> searchJobsByLocation(String location) {
-    	List<Job> jobs = jobRepository.findByLocationContainingIgnoreCase(location);
+    public List<JobDto> searchJobsByLocation(String location , int page , int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<Job> jobsPage = jobRepository.findByLocationContainingIgnoreCase(location , pageable);
         List<JobDto> jobDtos = new ArrayList<>();
-        for (Job job : jobs) {
+        for (Job job : jobsPage.getContent()) {
             jobDtos.add(JobMapper.mapJobToDto(job));
         }
         return jobDtos;
@@ -127,10 +136,11 @@ public class JobServiceImpl implements JobService {
     
     // Search job By Company Name
     @Override
-    public List<JobDto> searchJobsByCompanyName(String companyName) {
-    	List<Job> jobs = jobRepository.findByCompany_NameIgnoreCase(companyName);
+    public List<JobDto> searchJobsByCompanyName(String companyName , int page , int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<Job> jobsPage = jobRepository.findByCompany_NameIgnoreCase(companyName , pageable);
         List<JobDto> jobDtos = new ArrayList<>();
-        for (Job job : jobs) {
+        for (Job job : jobsPage.getContent()) {
             jobDtos.add(JobMapper.mapJobToDto(job));
         }
         return jobDtos;

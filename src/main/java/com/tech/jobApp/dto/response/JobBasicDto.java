@@ -2,7 +2,7 @@ package com.tech.jobApp.dto.response;
 
 import java.time.LocalDate;
 
-public class JobDto {
+public class JobBasicDto {
 
 	private String title;
     private String description;
@@ -10,8 +10,8 @@ public class JobDto {
     private Double minSalary;
     private Double maxSalary;
     private LocalDate postedAt;
-    private CompanyBasicDto company;
-	public String getTitle() {
+    
+    public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
@@ -47,20 +47,16 @@ public class JobDto {
 	public void setPostedAt(LocalDate postedAt) {
 		this.postedAt = postedAt;
 	}
-	public CompanyBasicDto getCompany() {
-		return company;
-	}
-	public void setCompany(CompanyBasicDto company) {
-		this.company = company;
-	}
-	public JobDto() {
+	
+	public JobBasicDto() {
 		
 	}
 	@Override
 	public String toString() {
-		return "JobDto [title=" + title + ", description=" + description + ", location=" + location + ", minSalary="
-				+ minSalary + ", maxSalary=" + maxSalary + ", postedAt=" + postedAt + ", company=" + company + "]";
+		return "JobBasicDto [title=" + title + ", description=" + description + ", location=" + location
+				+ ", minSalary=" + minSalary + ", maxSalary=" + maxSalary + ", postedAt=" + postedAt + "]";
 	}
-    
+	
+	
     
 }

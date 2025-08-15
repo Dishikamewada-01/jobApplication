@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +30,11 @@ public class JobController {
 
     // Get all jobs (admin + user)
     @GetMapping
-    public ResponseEntity<List<JobDto>> getAllJobs() {
-        List<JobDto> jobs = jobService.getAllJobs();
+    public ResponseEntity<List<JobDto>> getAllJobs(
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+    	
+        List<JobDto> jobs = jobService.getAllJobs(page , size);
         return ResponseEntity.ok(jobs);
     }
 
@@ -68,20 +70,23 @@ public class JobController {
 
     // Search job by title
     @GetMapping("/search/title")
-    public ResponseEntity<List<JobDto>> searchByTitle(@RequestParam String title) {
-    	return ResponseEntity.ok(jobService.searchJobsByTitle(title));
+    public ResponseEntity<List<JobDto>> searchByTitle(@RequestParam String title , @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+    	return ResponseEntity.ok(jobService.searchJobsByTitle(title , page , size));
     }
 
     // Search job by location
     @GetMapping("/search/location")
-    public ResponseEntity<List<JobDto>> searchByLocation(@RequestParam String location) {
-    	return ResponseEntity.ok(jobService.searchJobsByLocation(location));
+    public ResponseEntity<List<JobDto>> searchByLocation(@RequestParam String location , @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+    	return ResponseEntity.ok(jobService.searchJobsByLocation(location , page , size));
     }
 
     // Search job by company
     @GetMapping("/search/company")
-    public ResponseEntity<List<JobDto>> searchByCompany(@RequestParam String companyName) {
-        return ResponseEntity.ok(jobService.searchJobsByCompanyName(companyName));
+    public ResponseEntity<List<JobDto>> searchByCompany(@RequestParam String companyName , @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        return ResponseEntity.ok(jobService.searchJobsByCompanyName(companyName , page , size));
     }
     
 }

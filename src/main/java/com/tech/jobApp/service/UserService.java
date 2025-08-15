@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -57,13 +60,14 @@ public class UserService {
 	
 	
 	// Get all users
-	public List<UserDto> getAllUsers(){
-		List<Users> users= userRepository.findAll();
+	public List<UserDto> getAllUsers(int page , int size){
+		Pageable pageable=PageRequest.of(page, size);
+		Page<Users> usersPage= userRepository.findAll(pageable);
 		List<UserDto> userDtos= new ArrayList<>();
-		for(Users user:users) {
-			UserDto dto=UserMapper.toDto(user);
-			userDtos.add(dto);
-		}
+		for (Users user : usersPage.getContent()) {
+	        UserDto dto = UserMapper.toDto(user);
+	        userDtos.add(dto);
+	    }
 		return userDtos;
 	}
 	

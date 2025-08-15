@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tech.jobApp.dto.response.UserDto;
@@ -25,9 +26,10 @@ public class AdminController {
 	@Autowired
     private UserService userService;
 
+	// Get All Users
     @GetMapping("/users")
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+    public List<UserDto> getAllUsers(@RequestParam(defaultValue = "0") int page , @RequestParam(defaultValue = "5") int size) {
+        return userService.getAllUsers(page , size);
     }
     
     
