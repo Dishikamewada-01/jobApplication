@@ -13,6 +13,7 @@ public class CustomUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	
+	// Constructor injection
 	private Users user;
 	
 	public CustomUserDetails(Users user){

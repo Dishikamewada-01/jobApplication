@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tech.jobApp.dto.request.UserRegisterDto;
 import com.tech.jobApp.dto.request.UserUpdateDto;
 import com.tech.jobApp.dto.response.UserDto;
 import com.tech.jobApp.mapper.CompanyMapper;
@@ -38,10 +39,21 @@ public class UserService {
 		
 	
 	// Register User
-	public Users registerUser(Users user) {
-		 String encodedPassword = passwordEncoder.encode(user.getPassword());
-	     user.setPassword(encodedPassword);
-		return userRepository.save(user);
+	public Users registerUser(UserRegisterDto registerDto) {
+	    if (userRepository.existsByUsername(registerDto.getUsername())) {
+	        throw new RuntimeException("Username already exists");
+	    }
+	    if (userRepository.existsByEmail(registerDto.getEmail())) {
+	        throw new RuntimeException("Email already exists");
+	    }
+
+	    Users user = new Users();
+	    user.setUsername(registerDto.getUsername());
+	    user.setEmail(registerDto.getEmail());
+	    user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+	    user.setRole("ROLE_USER"); // default role for all registered users
+
+	    return userRepository.save(user);
 	}
 
 	
@@ -93,9 +105,15 @@ public class UserService {
 	    Users existingUser = userRepository.findByUsername(currentUsername)
 	            .orElseThrow(() -> new RuntimeException("User not found"));
 
+	 //  Check if the new username is different and not already taken
 	    if (updateDto.getUsername() != null && !updateDto.getUsername().isBlank()) {
+	        if (!existingUser.getUsername().equals(updateDto.getUsername()) &&
+	            userRepository.existsByUsername(updateDto.getUsername())) {
+	            throw new RuntimeException("Username already taken");
+	        }
 	        existingUser.setUsername(updateDto.getUsername());
 	    }
+
 	    if (updateDto.getEmail() != null && !updateDto.getEmail().isBlank()) {
 	        existingUser.setEmail(updateDto.getEmail());
 	    }

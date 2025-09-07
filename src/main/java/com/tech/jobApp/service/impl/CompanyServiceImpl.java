@@ -11,7 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
+
+import com.tech.jobApp.dto.request.CompanyCreateDto;
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
+import com.tech.jobApp.dto.response.CompanyBasicDto;
 import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.mapper.CompanyMapper;
 import com.tech.jobApp.mapper.JobMapper;
@@ -25,11 +28,16 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
     private CompanyRepository companyRepository;
-
+	
 	// Create or Post Company
     @Override
-    public Company createCompany(Company company) {
-        return companyRepository.save(company);
+    public CompanyBasicDto createCompany(CompanyCreateDto companyCreateDto) {
+        Company company = new Company();
+        company.setName(companyCreateDto.getName());
+        company.setType(companyCreateDto.getType());
+
+        Company savedCompany = companyRepository.save(company);
+        return CompanyMapper.mapCompanyToBasicDto(savedCompany);
     }
 
     
@@ -80,6 +88,27 @@ public class CompanyServiceImpl implements CompanyService{
         
         return companyDtos;
     }
+    
+    
+    
+    // Get all Companies Only
+    @Override
+    public List<CompanyBasicDto> getAllCompaniesBasic(int page , int size) {
+    	
+    	Pageable pageable= PageRequest.of(page, size);
+    	
+        Page<Company> companiesPage = companyRepository.findAll(pageable);
+        
+        List<CompanyBasicDto> basicDtos = new ArrayList<>();
+        
+        for(Company company : companiesPage.getContent()) {
+        	CompanyBasicDto dto = CompanyMapper.mapCompanyToBasicDto(company);
+        	basicDtos.add(dto);
+        }
+        
+        return basicDtos;
+    }
+    
 
     
     // Search Company By name

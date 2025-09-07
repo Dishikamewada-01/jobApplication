@@ -4,6 +4,7 @@ package com.tech.jobApp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tech.jobApp.dto.request.JobCreateDto;
 import com.tech.jobApp.dto.request.JobUpdateDto;
 import com.tech.jobApp.dto.response.JobDto;
-import com.tech.jobApp.model.Job;
+
 import com.tech.jobApp.service.JobService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -45,17 +49,19 @@ public class JobController {
         return ResponseEntity.ok(jobDto);
     }
 
-    // Create job (admin)
-    @PreAuthorize("hasRole('ADMIN')")
+    
+    // Create Job
     @PostMapping
-    public ResponseEntity<Job> createJob(@RequestBody Job job) {
-        return ResponseEntity.ok(jobService.createJob(job));
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<JobDto> createJob(@Valid @RequestBody JobCreateDto jobCreateDto) {
+        JobDto createdJob = jobService.createJob(jobCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdJob);
     }
 
     // Update job (admin)
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}")
-    public ResponseEntity<JobDto> updateJobPartially(@PathVariable Long id, @RequestBody JobUpdateDto requestedJob) {
+    public ResponseEntity<JobDto> updateJobPartially(@PathVariable Long id, @Valid @RequestBody JobUpdateDto requestedJob) {
     	
         return ResponseEntity.ok(jobService.updateJob(id, requestedJob));
     }

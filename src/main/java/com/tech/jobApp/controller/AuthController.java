@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tech.jobApp.dto.request.UserRegisterDto;
 import com.tech.jobApp.dto.response.UserDto;
-import com.tech.jobApp.mapper.UserMapper;
 import com.tech.jobApp.model.Users;
 import com.tech.jobApp.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,11 +21,11 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    // User registration
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser( @RequestBody Users user) {
-        user.setRole("ROLE_USER");
-        Users saved = userService.registerUser(user);
-        UserDto dto = UserMapper.toDto(saved);
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserRegisterDto registerDto) {
+        Users savedUser = userService.registerUser(registerDto);
+        UserDto dto = new UserDto(savedUser.getUsername(), savedUser.getEmail());
         return ResponseEntity.ok(dto);
     }
 

@@ -3,6 +3,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ public class UsersController {
 
     
     @PatchMapping("/update-profile")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserDto> updateProfile(@RequestBody UserUpdateDto updateDto, Principal principal) {
         Users updatedUser = userService.updateUserProfile(principal.getName(), updateDto);
         return ResponseEntity.ok(UserMapper.toDto(updatedUser));

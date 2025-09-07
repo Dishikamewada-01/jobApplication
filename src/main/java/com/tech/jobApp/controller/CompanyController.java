@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tech.jobApp.dto.request.CompanyCreateDto;
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
+import com.tech.jobApp.dto.response.CompanyBasicDto;
 import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.model.Company;
 import com.tech.jobApp.service.CompanyService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -29,15 +33,15 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
-
+    
     
     // Create or Post Company
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
-        return ResponseEntity.ok(companyService.createCompany(company));
+    public ResponseEntity<CompanyBasicDto> createCompany(@Valid @RequestBody CompanyCreateDto companyCreateDto) {
+        CompanyBasicDto createdCompany = companyService.createCompany(companyCreateDto);
+        return ResponseEntity.ok(createdCompany);
     }
-
     
     //Update Company
     @PreAuthorize("hasRole('ADMIN')")
@@ -58,12 +62,23 @@ public class CompanyController {
     }
 
     
-    // Get All Companies
+    // Get All Companies With Job List
     @GetMapping
     public ResponseEntity<List<CompanyDto>> getAllCompanies(
     		@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
     	List<CompanyDto> companies = companyService.getAllCompanies(page , size);
+        return ResponseEntity.ok(companies);
+        
+    }
+    
+    
+    // Get All Companies Without Job List
+    @GetMapping("/basic")
+    public ResponseEntity<List<CompanyBasicDto>> getAllCompaniesBasic(
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+    	List<CompanyBasicDto> companies = companyService.getAllCompaniesBasic(page , size);
         return ResponseEntity.ok(companies);
         
     }

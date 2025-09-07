@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.tech.jobApp.dto.request.JobCreateDto;
 import com.tech.jobApp.dto.request.JobUpdateDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.mapper.JobMapper;
@@ -28,10 +29,26 @@ public class JobServiceImpl implements JobService {
     private CompanyRepository companyRepository;
     
     
-    // Create job
     @Override
-    public Job createJob(Job job) {
-        return jobRepository.save(job);
+    public JobDto createJob(JobCreateDto jobCreateDto) {
+        // 1. Fetch company
+        Company company = companyRepository.findById(jobCreateDto.getCompanyId())
+            .orElseThrow(() -> new RuntimeException("Company not found with ID: " + jobCreateDto.getCompanyId()));
+
+        // 2. Map DTO to Job entity
+        Job job = new Job();
+        job.setTitle(jobCreateDto.getTitle());
+        job.setDescription(jobCreateDto.getDescription());
+        job.setLocation(jobCreateDto.getLocation());
+        job.setMinSalary(jobCreateDto.getMinSalary());
+        job.setMaxSalary(jobCreateDto.getMaxSalary());
+        job.setCompany(company);
+
+        // 3. Save job
+        Job savedJob = jobRepository.save(job);
+
+        // 4. Map to DTO
+        return JobMapper.mapJobToDto(savedJob);
     }
 
     

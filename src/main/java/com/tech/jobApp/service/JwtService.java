@@ -64,6 +64,7 @@ public class JwtService {
         return claimResolver.apply(claims);
     }
 
+    //Parsing
     private Claims extractAllClaims(String token) {
         try {
             return Jwts.parser()
