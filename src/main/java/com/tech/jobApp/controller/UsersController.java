@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +31,6 @@ public class UsersController {
 
     
     @PatchMapping("/update-profile")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserDto> updateProfile(@RequestBody UserUpdateDto updateDto, Principal principal) {
         Users updatedUser = userService.updateUserProfile(principal.getName(), updateDto);
         return ResponseEntity.ok(UserMapper.toDto(updatedUser));

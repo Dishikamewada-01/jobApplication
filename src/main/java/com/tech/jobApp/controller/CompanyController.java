@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +19,6 @@ import com.tech.jobApp.dto.request.CompanyCreateDto;
 import com.tech.jobApp.dto.request.CompanyUpdateDto;
 import com.tech.jobApp.dto.response.CompanyBasicDto;
 import com.tech.jobApp.dto.response.CompanyDto;
-import com.tech.jobApp.model.Company;
 import com.tech.jobApp.service.CompanyService;
 
 import jakarta.validation.Valid;

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tech.jobApp.dto.response.UserDto;
-import com.tech.jobApp.model.Users;
 
 import com.tech.jobApp.service.UserService;
 
