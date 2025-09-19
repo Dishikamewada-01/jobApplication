@@ -86,12 +86,12 @@ Run the main class JobApplication.java
 Your Spring Boot app will be available at: http://localhost:8080
 ```
 ### 5. Run Tests
-'''
+```
 mvn test
-'''
+
 Unit tests are written using JUnit 5 and Mockito for the service layer.
 This ensures that the business logic is tested independently of the database layer.
-
+```
 
 
 
