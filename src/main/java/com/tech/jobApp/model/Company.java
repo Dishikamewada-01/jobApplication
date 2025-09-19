@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,8 @@ public class Company {
     private Long id;
 
     private String name; // e.g., TCS, Infosys
+    
+    @Column(name = "company_type")
     private String type; // e.g., service-based, product-based, startup
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
@@ -37,7 +40,11 @@ public class Company {
         return id;
     }
 
-    public String getName() {
+    public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
         return name;
     }
 

@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jobApplication</name>
 	<description>Project for Spring Boot</description>
-	<url/>
+	<url />
 	<licenses>
 		<license />
 	</licenses>
@@ -88,7 +88,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
 	</dependencies>
+
 
 	<build>
 		<plugins>

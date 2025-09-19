@@ -1,7 +1,6 @@
 package com.tech.jobApp.mapper;
 
 import com.tech.jobApp.dto.response.CompanyBasicDto;
-import com.tech.jobApp.dto.response.CompanyDto;
 import com.tech.jobApp.dto.response.JobDto;
 import com.tech.jobApp.model.Job;
 

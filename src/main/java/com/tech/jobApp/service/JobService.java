@@ -5,7 +5,6 @@ import java.util.List;
 import com.tech.jobApp.dto.request.JobCreateDto;
 import com.tech.jobApp.dto.request.JobUpdateDto;
 import com.tech.jobApp.dto.response.JobDto;
-import com.tech.jobApp.model.Job;
 
 public interface JobService {
 	
