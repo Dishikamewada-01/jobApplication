@@ -23,8 +23,6 @@ import com.tech.jobApp.service.CompanyService;
 
 import jakarta.validation.Valid;
 
-
-
 @RestController
 @RequestMapping("/api/companies")
 public class CompanyController {

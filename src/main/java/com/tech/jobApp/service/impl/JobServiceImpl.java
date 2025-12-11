@@ -29,6 +29,7 @@ public class JobServiceImpl implements JobService {
     private CompanyRepository companyRepository;
     
     
+    // Create Job
     @Override
     public JobDto createJob(JobCreateDto jobCreateDto) {
         // 1. Fetch company

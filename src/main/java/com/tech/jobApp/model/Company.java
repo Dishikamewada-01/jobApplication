@@ -20,7 +20,7 @@ public class Company {
 
     private String name; // e.g., TCS, Infosys
     
-    @Column(name = "company_type")
+    @Column(name = "type")
     private String type; // e.g., service-based, product-based, startup
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
