@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Pageable;
 
 import com.tech.jobApp.dto.request.CompanyCreateDto;
@@ -72,6 +72,8 @@ public class CompanyServiceImpl implements CompanyService{
 
     
     // Get All Companies
+    
+    @Transactional(readOnly = true)
     @Override
     public List<CompanyDto> getAllCompanies(int page , int size) {
     	

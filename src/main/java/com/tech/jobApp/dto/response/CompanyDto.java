@@ -6,8 +6,11 @@ import java.util.List;
 public class CompanyDto {
 
 	private String name;
-    private String type;
-    private List<JobBasicDto> jobs;
+    
+	private String type;
+    
+	private List<JobBasicDto> jobs;
+	
 	public String getName() {
 		return name;
 	}
