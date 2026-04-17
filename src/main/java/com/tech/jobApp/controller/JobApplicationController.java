@@ -19,7 +19,7 @@ public class JobApplicationController {
     @Autowired
     private JobApplicationService applicationService;
 
-    // ✅ Apply for Job API
+    // Apply for Job API
     @PostMapping("/apply/{jobId}")
     public ResponseEntity<?> applyForJob(
             @PathVariable Long jobId,
@@ -30,7 +30,7 @@ public class JobApplicationController {
         try {
             JobApplication application = applicationService.applyForJob(jobId, file, name, email);
 
-            return ResponseEntity.ok(JobApplicationMapper.toDto(application)); // ✅ FIX
+            return ResponseEntity.ok(JobApplicationMapper.toDto(application)); 
 
         } catch (RuntimeException | IOException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
