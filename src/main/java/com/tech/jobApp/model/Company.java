@@ -3,6 +3,8 @@ package com.tech.jobApp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +26,7 @@ public class Company {
     private String type; // e.g., service-based, product-based, startup
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Job> jobs = new ArrayList<>();
 
     // Constructors
