@@ -1,32 +1,47 @@
 # Job Application Management API (Spring Boot)
 
-This is a RESTful API built using Spring Boot for managing job applications.
+A production-style RESTful API built using Spring Boot that simulates a real-world job portal backend system. It supports authentication, job management, and job application workflows.
 
 ## 🚧 Project Status
 
-🔧 This project is currently under active development. More features will be added in the upcoming versions.
+🔧 Actively under development — continuously improving with real-world features.
 
 ## 🔑 Features (Completed)
-- User Registration & Login with JWT Auth ✅
-- Role-based access (Admin/User) ✅
-- Company & Job APIs (Create, Read, Update, Delete) ✅
-- Job Application endpoints ✅
-- Pagination for Users, Jobs, and Companies ✅
-- Searching in Jobs by title, location, and company name ✅
+- 🔐 User Registration & Login using JWT Authentication ✅
+- 🛡 Role-Based Access Control (Admin/User) ✅
+- 🏢💼 Company & Job APIs (Create, Read, Update, Delete) ✅
+- 📄 Job Application System (Apply to jobs with resume upload) ✅
+- 📂 File Upload Handling using MultipartFile ✅
+- 🚫 Duplicate Application Prevention ✅
+- 📑 Pagination for Users, Jobs, and Companies ✅
+- 🔍 Job Search (by title, location, company name) ✅
+- 🔄 DTO-based API responses (clean & secure design)
+  
 
-## 🔑 Features in Progress / Planned
-- User Logout with JWT (Token invalidation mechanism)
-- Filtering for Jobs (e.g., salary range, location, company type)
-- Job Application Endpoints (Apply to jobs, view applications)
+## 🚧 Upcoming Features
+- 📧 Email Notification System (User + Admin alerts)
+- 🔓 Logout with JWT Token Invalidation
+- J🎯 Advanced Job Filtering (salary range, location, company type)
+- 📥 View & Manage Job Applications (Admin Panel)
 
 ## 🛠 Tech Stack
 - ☕ Java 17
 - 🌱 Spring Boot
-- 🔐 Spring Security with JWT
+- 🔐 Spring Security + JWT
 - 🗄  Spring Data JPA
 - 🛢  MySQL
 - 🧪 Postman (for API testing)
 - 📦 Maven (build tool)
+
+
+## 🧠 Key Highlights
+- Implemented secure authentication & authorization using JWT
+- Designed clean layered architecture (Controller → Service → Repository)
+- Used DTO pattern to prevent sensitive data exposure
+- Implemented file upload system for resumes
+- Applied real-world business logic (duplicate application prevention)
+- Followed Git branching strategy (feature-based development)
+
 
 ## 📌 Notes
 - Default role during registration: ROLE_USER
@@ -48,9 +63,7 @@ This is a RESTful API built using Spring Boot for managing job applications.
       - **repository** – JPA repositories
       - **service** – Service interfaces
       - **service.impl** – Service implementations
-  - **src/main/resources** – Application properties, static files
-  - **src/test/java** – Test classes
-  - **src/test/resources** – Test resources
+  - **src/main/resources** – Configuration files
   - **target** – Build output
 
 
@@ -97,17 +110,17 @@ This ensures that the business logic is tested independently of the database lay
 
 ## 📌 API Endpoints
 
-| Method | Endpoint                  | Description                           | Role       |
-|--------|---------------------------|---------------------------------------|------------|
-| POST   | `/auth/register`          | Register a new user                   | Public     |
-| POST   | `/auth/login`             | Login and get JWT token               | Public     |
-| GET    | `/api/jobs`               | List all jobs (with pagination)       | USER/ADMIN |
-| GET    | `/api/jobs/search`        | Search jobs by title/location/company | USER/ADMIN |
-| POST   | `/api/companies`          | Create new company                    | ADMIN      |
-| PUT    | `/ap/companies/{id}`      | Update company                        | ADMIN      |
-| DELETE | `api//companies/{id}`     | Delete company                        | ADMIN      |
-| POST   | `/api/jobs`               | Create a new job                      | ADMIN      |
-
+| Method | Endpoint                         | Description                           | Role       |
+|--------|--------------------------------- |---------------------------------------|------------|
+| POST   | `/auth/register`                 | Register a new user                   | Public     |
+| POST   | `/auth/login`                    | Login and get JWT token               | Public     |
+| GET    | `/api/jobs`                      | List all jobs (with pagination)       | USER/ADMIN |
+| GET    | `/api/jobs/search`               | Search jobs by title/location/company | USER/ADMIN |
+| POST   | `/api/companies`                 | Create new company                    | ADMIN      |
+| PUT    | `/ap/companies/{id}`             | Update company                        | ADMIN      |
+| DELETE | `api//companies/{id}`            | Delete company                        | ADMIN      |
+| POST   | `/api/jobs`                      | Create a new job                      | ADMIN      |
+| POST   | `/api/applications/apply/{jobId}`| Apply to Job                          | USER       |
 
 
 ---
