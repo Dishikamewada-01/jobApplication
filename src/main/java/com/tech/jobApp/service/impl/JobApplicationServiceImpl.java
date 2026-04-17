@@ -33,23 +33,23 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     @Override
     public JobApplication applyForJob(Long jobId, MultipartFile file, String name, String email) throws IOException {
 
-        // 1️⃣ Get logged-in user
+        // 1. Get logged-in user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Users user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 2️⃣ Fetch job
+        // 2️. Fetch job
         Job job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
-        // 3️⃣ Prevent duplicate application
+        // 3️. Prevent duplicate application
         applicationRepo.findByUserIdAndJobId(user.getId(), jobId)
                 .ifPresent(a -> {
                     throw new RuntimeException("You have already applied for this job");
                 });
 
-        // 4️⃣ Validate file
+        // 4️. Validate file
         if (file.isEmpty()) {
             throw new RuntimeException("File is empty");
         }
@@ -58,7 +58,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
             throw new RuntimeException("Only PDF files are allowed");
         }
 
-        // 5️⃣ Save file
+        // 5️. Save file
         String uploadDir = "uploads/";
 
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
@@ -67,7 +67,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         Files.createDirectories(filePath.getParent());
         Files.write(filePath, file.getBytes());
 
-        // 6️⃣ Save application
+        // 6️. Save application
         JobApplication app = new JobApplication();
         app.setApplicantName(name);
         app.setApplicantEmail(email);
